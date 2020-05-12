@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+</head>
+<body>
+
+    <h2>Login Form</h2>
+
+    <form action="/login" method="post">
+        Username: <input type="text" name="username"/><br/>
+        Password: <input type="password" name="password"/><br/><br/>
+        <input type="submit" value="Sign in"/>
+    </form>
+    <br/><br/><br/><br/>
+
+    <tr th:each="account : ${accounts}">
+        <td th:text="${account.getUsername()}"></td>
+        <td th:text="${account.getPassword()}"></td>
+        <br/>
+    </tr>
+
+</body>
+</html>
