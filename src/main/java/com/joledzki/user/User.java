@@ -1,14 +1,12 @@
 package com.joledzki.user;
 
+import com.joledzki.authorities.Authorities;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class User implements UserDetails {
@@ -21,15 +19,22 @@ public class User implements UserDetails {
     private String password;
     private String firstname;
     private String lastname;
-    private String role;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name="user_authorities",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authorities_id")
+    )
+    private List<Authorities> authorities;
 
     public User(){}
-    public User(String username, String password, String firstname, String lastname, String role){
+    public User(String username, String password, String firstname, String lastname, List<Authorities> authorities){
         this.username = username;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.role = role;
+        this.authorities = authorities;
     }
 
     public Long getId() {
@@ -42,7 +47,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
+    }
+    public void setAuthorities(List<Authorities> authorities) {
+        this.authorities = authorities;
     }
 
     public void setPassword(String password){
@@ -74,13 +82,6 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return this.username;
-    }
-
-    public String getRole() {
-        return role;
-    }
-    public void setRole(String role) {
-        this.role = role;
     }
 
     @Override

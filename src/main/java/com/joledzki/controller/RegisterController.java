@@ -1,5 +1,7 @@
 package com.joledzki.controller;
 
+import com.joledzki.authorities.Authorities;
+import com.joledzki.authorities.AuthoritiesRepository;
 import com.joledzki.config.SecurityPassword;
 import com.joledzki.user.User;
 import com.joledzki.user.UserRepository;
@@ -9,15 +11,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 @Controller
 public class RegisterController {
 
     private UserRepository userRepository;
+    private AuthoritiesRepository authoritiesRepository;
     private SecurityPassword securityPassword;
 
     @Autowired
-    public RegisterController(UserRepository userRepository, SecurityPassword securityPassword){
+    public RegisterController(UserRepository userRepository, AuthoritiesRepository authoritiesRepository, SecurityPassword securityPassword){
         this.userRepository = userRepository;
+        this.authoritiesRepository = authoritiesRepository;
         this.securityPassword = securityPassword;
     }
 
@@ -29,8 +37,11 @@ public class RegisterController {
 
     @PostMapping("/add-user")
     public String addUser(User user){
+        List<Authorities> auth = new ArrayList<>();
+        auth.add(authoritiesRepository.findByName("READ"));
+        auth.add(authoritiesRepository.findByName("RENT"));
         user.setPassword(securityPassword.encode().encode(user.getPassword()));
-        user.setRole("ROLE_USER");
+        user.setAuthorities(auth);
         userRepository.save(user);
         return "register";
     }
