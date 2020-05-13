@@ -28,13 +28,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/hello").hasAnyAuthority("READ")
+        http.authorizeRequests().antMatchers("/").authenticated()
                                 .antMatchers("/test").hasAnyAuthority("RENT")
                 .and()
                 .formLogin()
                     .loginPage("/login")
                     .successForwardUrl("/hello")
-                    .failureForwardUrl("/login?error=true")
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .permitAll()

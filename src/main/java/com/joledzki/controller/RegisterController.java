@@ -38,8 +38,8 @@ public class RegisterController {
     @PostMapping("/add-user")
     public String addUser(User user){
         List<Authorities> auth = new ArrayList<>();
-        auth.add(authoritiesRepository.findByName("READ"));
-        auth.add(authoritiesRepository.findByName("RENT"));
+        auth.add(authoritiesRepository.findByName("USER_READ"));
+        auth.add(authoritiesRepository.findByName("USER_RENT"));
         user.setPassword(securityPassword.encode().encode(user.getPassword()));
         user.setAuthorities(auth);
         userRepository.save(user);

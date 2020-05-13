@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Hello</title>
 </head>
 <body>
 <h1>Hello Boomer ;)</h1>
+<b>Your authorities</b><br/>
+<tr th:each="auth : ${authorities}">
+    <td th:text="${auth.getAuthority()}"></td><br/>
+</tr>
 </body>
 </html>

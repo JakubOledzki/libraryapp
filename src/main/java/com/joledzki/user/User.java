@@ -1,12 +1,14 @@
 package com.joledzki.user;
 
 import com.joledzki.authorities.Authorities;
+import com.joledzki.book.Book;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User implements UserDetails {
@@ -19,6 +21,9 @@ public class User implements UserDetails {
     private String password;
     private String firstname;
     private String lastname;
+
+    @OneToMany(mappedBy = "createdByUser")
+    private Set<Book> books;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

@@ -1,9 +1,8 @@
 package com.joledzki.book;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.joledzki.user.User;
+
+import javax.persistence.*;
 
 @Entity
 public class Book {
@@ -14,13 +13,20 @@ public class Book {
 
     private String title;
     private String author;
+    private String description;
+
+    @ManyToOne
+    private User createdByUser;
 
     public Book(){}
-    public Book(String title, String author){
+    public Book(String title, String author, String description,User createdByUser){
         this.title = title;
         this.author = author;
+        this.description = description;
+        this.createdByUser = createdByUser;
     }
 
+    public void setId(Long id) {this.id = id;}
     public Long getId() {
         return id;
     }
@@ -39,6 +45,11 @@ public class Book {
         this.author = author;
     }
 
+    public User getCreatedByUser() {return createdByUser;}
+    public void setCreatedByUser(User createdByUser) {this.createdByUser = createdByUser;}
+
+    public String getDescription() {return description;}
+    public void setDescription(String description) {this.description = description;}
 
     @Override
     public String toString() {
@@ -46,6 +57,8 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
+                ", description='" + description + '\'' +
+                ", createdByUser=" + createdByUser +
                 '}';
     }
 }

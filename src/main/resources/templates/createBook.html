@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Book</title>
+</head>
+<body>
+
+    <h2>Create book form</h2>
+    <form method="post" th:action="@{/addBook}" th:object="${book}">
+        Title: <input type="text" th:field="*{title}"/><br/>
+        Author(s): <input type="text" th:field="*{author}"/><br/>
+        Description: <textarea th:field="*{description}"></textarea><br/><br/>
+
+        <input type="submit" value="Add Book"/>
+    </form>
+</body>
+</html>
