@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
 
 @Controller
 public class BookController {
@@ -32,9 +35,35 @@ public class BookController {
     public String addBook(Book book){
 
         book.setCreatedByUser(userService.getUserDetails());
-        System.out.println("Add book: "+book);
         bookRepository.save(book);
         return "createBook";
+    }
+
+    @GetMapping("/list-books")
+    public String getListBook(Model model){
+        model.addAttribute("books", bookRepository.findAll());
+        return "listBook";
+    }
+
+    @GetMapping("/rentBook")
+    public String getRentBook(@RequestParam Long id){
+
+        Optional<Book> book = bookRepository.findById(id);
+
+        if(book.isPresent()){
+            if(book.get().getRentedByUser()!=null){
+                System.out.println("THIS BOOK IS ALREADY RENTED");
+                return "listBook";
+            }
+            else {
+                bookRepository.setUserRent(id, userService.getUserDetails());
+                System.out.println("USER: " + userService.getUserDetails().getUsername() + " RENTED BOOK");
+            }
+        }
+        else{
+            System.out.println("BOOK DOESNT EXISTS");
+        }
+        return "listBook";
     }
 
 }

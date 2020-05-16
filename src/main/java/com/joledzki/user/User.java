@@ -22,8 +22,11 @@ public class User implements UserDetails {
     private String firstname;
     private String lastname;
 
-    @OneToMany(mappedBy = "createdByUser")
+    @OneToMany(mappedBy = "createdByUser", fetch = FetchType.EAGER)
     private Set<Book> books;
+
+    @OneToMany(mappedBy = "rentedByUser")
+    private Set<Book> rentedBooks;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -104,5 +107,33 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
+
+    public Set<Book> getRentedBooks() {
+        return rentedBooks;
+    }
+    public void setRentedBooks(Set<Book> rentedBooks) {
+        this.rentedBooks = rentedBooks;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", books=" + books +
+                ", rentedBooks=" + rentedBooks +
+                ", authorities=" + authorities +
+                '}';
     }
 }

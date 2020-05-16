@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>List Books</title>
+</head>
+<body>
+    <h1>List books</h1>
+
+    <table th:each="book : ${books}">
+
+        <tr>
+            <td th:text="'Title: ' + ${book.getTitle()} + ' | '"></td>
+            <td th:text="'Author: ' + ${book.getAuthor()}"></td>
+            <td th:if="${book.getRentedByUser()}==null"><span style="color: green">RENT</span></td>
+            <td th:unless="${book.getRentedByUser()}==null"><span style="color: red">RENTED</span></td>
+        </tr>
+
+    </table>
+
+</body>
+</html>

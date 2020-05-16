@@ -18,6 +18,9 @@ public class Book {
     @ManyToOne
     private User createdByUser;
 
+    @ManyToOne
+    private User rentedByUser;
+
     public Book(){}
     public Book(String title, String author, String description,User createdByUser){
         this.title = title;
@@ -51,6 +54,13 @@ public class Book {
     public String getDescription() {return description;}
     public void setDescription(String description) {this.description = description;}
 
+    public User getRentedByUser() {
+        return rentedByUser;
+    }
+    public void setRentedByUser(User rentedByUser) {
+        this.rentedByUser = rentedByUser;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -59,6 +69,7 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", description='" + description + '\'' +
                 ", createdByUser=" + createdByUser +
+                ", rentedByUser=" + rentedByUser +
                 '}';
     }
 }

@@ -28,12 +28,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/").authenticated()
-                                .antMatchers("/test").hasAnyAuthority("RENT")
+        http.authorizeRequests().antMatchers("/","/index").authenticated()
+                                .antMatchers("/list-books").hasAnyAuthority("USER_READ")
+                                .antMatchers("/rentBook").hasAnyAuthority("USER_RENT")
+                                .antMatchers("/addBook", "/create-book").hasAnyAuthority("ADMIN_ADD")
                 .and()
                 .formLogin()
                     .loginPage("/login")
-                    .successForwardUrl("/hello")
+                    .successForwardUrl("/index")
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .permitAll()

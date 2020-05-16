@@ -22,12 +22,6 @@ public class LoginController {
         this.userService = userService;
     }
 
-    @RequestMapping("/hello")
-    public String getHello(Model model){
-        model.addAttribute("authorities", userService.getUserDetails().getAuthorities());
-        return "hello";
-    }
-
     @GetMapping("/login")
     public String getLogin(Model model){
         model.addAttribute("accounts", userRepository.findAll());

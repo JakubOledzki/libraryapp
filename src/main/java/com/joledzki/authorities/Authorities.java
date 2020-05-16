@@ -14,7 +14,7 @@ public class Authorities implements GrantedAuthority {
     private Long id;
 
     private String name;
-    @ManyToMany(mappedBy = "authorities")
+    @ManyToMany(mappedBy = "authorities", fetch = FetchType.EAGER)
     private Set<User> users;
 
     public void setAuthority(String name){
@@ -24,5 +24,14 @@ public class Authorities implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return this.name;
+    }
+
+    @Override
+    public String toString() {
+        return "Authorities{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", users=" + users +
+                '}';
     }
 }
