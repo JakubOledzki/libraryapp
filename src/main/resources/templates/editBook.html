@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Book</title>
+</head>
+<body>
+    <h2>Edit Book</h2>
+
+    <form method="post" th:action="@{/initEditBook}" th:object="${book}">
+        <input type="hidden" th:field="*{id}" value="${book.getId()}"/>
+        Author: <input type="text" th:field="*{author}" th:value="${book.getAuthor()}"/><br/>
+        Title: <input type="text" th:field="*{title}" th:value="${book.getTitle()}"/><br/>
+        Description: <textarea th:field="*{description}" th:value="${book.getDescription()}"></textarea><br/><br/>
+        <input type="submit" value="Edit book"/>
+    </form>
+</body>
+</html>

@@ -68,8 +68,8 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", description='" + description + '\'' +
-                ", createdByUser=" + createdByUser +
-                ", rentedByUser=" + rentedByUser +
+                ", createdByUser=" + createdByUser.getUsername() +
+                ", rentedByUser=" + rentedByUser.getUsername() +
                 '}';
     }
 }

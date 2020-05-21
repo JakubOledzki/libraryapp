@@ -98,7 +98,27 @@ public class BookController {
         else {
             System.out.println("ITS NOT YOUR BOOK");
         }
-        return "myBooks";
+        return "redirect:/myBooks";
+    }
+
+    @GetMapping("/editBook")
+    public String editBook(@RequestParam Long id, Model model){
+        Optional<Book> book = bookRepository.findById(id);
+        if(book == null){
+            System.out.println("Book doesn't exist");
+        }
+        else {
+            //BOOK EXISTS
+            model.addAttribute("book",book.get());
+        }
+        return "editBook";
+    }
+
+    @PostMapping("/initEditBook")
+    public String initEditBook(Book book){
+        System.out.println(book.getId());
+        bookRepository.updateBook(book.getId(),book.getAuthor(), book.getTitle(), book.getDescription());
+        return "redirect:/list-books";
     }
 
 }
