@@ -7,13 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
     Optional<Book> findById(Long id);
 
-    Optional<Book> findByRentedByUser(User user);
+    List<Book> findAllByRentedByUser(User user);
+    Optional<Book> findByIdAndRentedByUser(Long id, User user);
 
     @Modifying
     @Transactional
