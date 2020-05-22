@@ -32,6 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/list-books").hasAnyAuthority("USER_READ")
                                 .antMatchers("/rentBook","/giveBookBack").hasAnyAuthority("USER_RENT")
                                 .antMatchers("/addBook", "/create-book").hasAnyAuthority("ADMIN_ADD")
+                                .antMatchers("/editBook","/initEditBook").hasAnyAuthority("ADMIN_EDIT")
+                                .antMatchers("/deleteBook").hasAnyAuthority("ADMIN_DELETE")
                 .and()
                 .formLogin()
                     .loginPage("/login")

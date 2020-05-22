@@ -17,6 +17,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findAllByRentedByUser(User user);
     Optional<Book> findByIdAndRentedByUser(Long id, User user);
 
+    @Transactional
+    void deleteBookById(Long id);
+
     @Modifying
     @Transactional
     @Query("UPDATE Book b SET b.rentedByUser=:user WHERE b.id=:id")
