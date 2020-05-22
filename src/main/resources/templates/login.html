@@ -27,14 +27,9 @@
             </div>
             <button type="submit" class="btn btn-primary">Log in</button>
         </form>
+        <a th:href="@{/register}">Register</a>
     </div>
 </div>
-
-    <tr th:each="account : ${accounts}">
-        <td th:text="${account.getUsername()}"></td>
-        <td th:text="${account.getPassword()}"></td>
-        <br/>
-    </tr>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

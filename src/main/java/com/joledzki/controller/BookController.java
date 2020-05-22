@@ -34,6 +34,10 @@ public class BookController {
 
     @GetMapping("/create-book")
     public String bookForm(Model model){
+        User user = userService.getUserDetails();
+        Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
+        model.addAttribute("user",user);
+        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
         model.addAttribute("book",new Book());
         return "createBook";
     }
@@ -107,6 +111,10 @@ public class BookController {
 
     @GetMapping("/editBook")
     public String editBook(@RequestParam Long id, Model model){
+        User user = userService.getUserDetails();
+        Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
+        model.addAttribute("user",user);
+        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
         Optional<Book> book = bookRepository.findById(id);
         if(book == null){
             System.out.println("Book doesn't exist");

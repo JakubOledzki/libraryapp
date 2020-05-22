@@ -1,18 +1,69 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
     <title>Create Book</title>
 </head>
 <body>
 
-    <h2>Create book form</h2>
-    <form method="post" th:action="@{/addBook}" th:object="${book}">
-        Title: <input type="text" th:field="*{title}"/><br/>
-        Author(s): <input type="text" th:field="*{author}"/><br/>
-        Description: <textarea th:field="*{description}"></textarea><br/><br/>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Create Book</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <input type="submit" value="Add Book"/>
-    </form>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/myBooks}">My Books</a>
+            </li>
+            <li class="nav-item" th:if="${admin_add}==true">
+                <a class="nav-link" th:href="@{/create-book}">Create book</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/list-books}">List books</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/}">Back</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+
+</nav>
+
+    <div class="container-fluid mt-5">
+        <div class="col-6 mx-auto bg-light px-2 py-2" style="border: 1px solid #939393; border-radius: 5px">
+            <form method="post" th:action="@{/addBook}" th:object="${book}">
+                <div class="form-group">
+                    <label for="titleInput">Title</label>
+                    <input type="text" class="form-control" id="titleInput" th:field="*{title}"/>
+                </div>
+                <div class="form-group">
+                    <label for="authorInput">Author</label>
+                    <input type="text" class="form-control" id="authorInput" th:field="*{author}"/>
+                </div>
+                <div class="form-group">
+                    <label for="descriptionInput">Description</label>
+                    <textarea type="text" class="form-control" id="descriptionInput" th:field="*{description}"></textarea>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Add Book"/>
+            </form>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </body>
 </html>
