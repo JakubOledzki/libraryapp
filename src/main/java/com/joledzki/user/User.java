@@ -2,6 +2,9 @@ package com.joledzki.user;
 
 import com.joledzki.authorities.Authorities;
 import com.joledzki.book.Book;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter @Setter @NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -46,7 +50,6 @@ public class User implements UserDetails {
     )
     private List<Authorities> authorities;
 
-    public User(){}
     public User(String username, String password, String firstname, String lastname, List<Authorities> authorities){
         this.username = username;
         this.password = password;
@@ -71,37 +74,6 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
-    public void setPassword(String password){
-        this.password = password;
-    }
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-
-    public String getFirstname() {
-        return firstname;
-    }
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public void setUsername(String username){
-        this.username = username;
-    }
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -117,20 +89,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public Set<Book> getBooks() {
-        return books;
-    }
-    public void setBooks(Set<Book> books) {
-        this.books = books;
-    }
-
-    public Set<Book> getRentedBooks() {
-        return rentedBooks;
-    }
-    public void setRentedBooks(Set<Book> rentedBooks) {
-        this.rentedBooks = rentedBooks;
     }
 
     @Override

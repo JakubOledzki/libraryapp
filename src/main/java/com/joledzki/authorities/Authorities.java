@@ -1,12 +1,16 @@
 package com.joledzki.authorities;
 
 import com.joledzki.user.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Getter @Setter @NoArgsConstructor
 public class Authorities implements GrantedAuthority {
 
     @Id
@@ -16,10 +20,6 @@ public class Authorities implements GrantedAuthority {
     private String name;
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.EAGER)
     private Set<User> users;
-
-    public void setAuthority(String name){
-        this.name = name;
-    }
 
     @Override
     public String getAuthority() {

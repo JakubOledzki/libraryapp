@@ -1,10 +1,14 @@
 package com.joledzki.book;
 
 import com.joledzki.user.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
+@Getter @Setter @NoArgsConstructor
 public class Book {
 
     @Id
@@ -21,44 +25,11 @@ public class Book {
     @ManyToOne
     private User rentedByUser;
 
-    public Book(){}
     public Book(String title, String author, String description,User createdByUser){
         this.title = title;
         this.author = author;
         this.description = description;
         this.createdByUser = createdByUser;
-    }
-
-    public void setId(Long id) {this.id = id;}
-    public Long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public User getCreatedByUser() {return createdByUser;}
-    public void setCreatedByUser(User createdByUser) {this.createdByUser = createdByUser;}
-
-    public String getDescription() {return description;}
-    public void setDescription(String description) {this.description = description;}
-
-    public User getRentedByUser() {
-        return rentedByUser;
-    }
-    public void setRentedByUser(User rentedByUser) {
-        this.rentedByUser = rentedByUser;
     }
 
     @Override
