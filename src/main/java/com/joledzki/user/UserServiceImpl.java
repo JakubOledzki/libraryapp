@@ -1,21 +1,23 @@
 package com.joledzki.user;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+
+import javax.validation.Valid;
 
 @Service
 public class UserServiceImpl implements UserDetailsService {
 
+    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
 
     public User getUserDetails(){
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -32,4 +34,5 @@ public class UserServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("USER NOT EXISTS");
         }
     }
+
 }

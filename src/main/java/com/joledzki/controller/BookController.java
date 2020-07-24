@@ -19,18 +19,15 @@ import java.util.Optional;
 @Controller
 public class BookController {
 
+    @Autowired
     private BookRepository bookRepository;
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private AuthoritiesRepository authoritiesRepository;
+    @Autowired
     private UserServiceImpl userService;
 
-    @Autowired
-    public BookController(BookRepository bookRepository, UserRepository userRepository, AuthoritiesRepository authoritiesRepository,UserServiceImpl userService){
-        this.bookRepository = bookRepository;
-        this.userRepository = userRepository;
-        this.authoritiesRepository = authoritiesRepository;
-        this.userService = userService;
-    }
 
     @GetMapping("/create-book")
     public String bookForm(Model model){

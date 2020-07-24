@@ -15,16 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ProfilController {
 
-    private UserServiceImpl userService;
-    private UserRepository userRepository;
-    private AuthoritiesRepository authoritiesRepository;
-
     @Autowired
-    public ProfilController(UserServiceImpl userService, UserRepository userRepository, AuthoritiesRepository authoritiesRepository){
-        this.userService = userService;
-        this.userRepository = userRepository;
-        this.authoritiesRepository = authoritiesRepository;
-    }
+    private UserServiceImpl userService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private AuthoritiesRepository authoritiesRepository;
 
     @GetMapping("/")
     public String getProfil(Model model){

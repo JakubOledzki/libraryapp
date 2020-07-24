@@ -13,14 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LoginController {
 
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private UserServiceImpl userService;
 
-    @Autowired
-    public LoginController(UserRepository userRepository, UserServiceImpl userService){
-        this.userRepository = userRepository;
-        this.userService = userService;
-    }
 
     @GetMapping("/login")
     public String getLogin(Model model){

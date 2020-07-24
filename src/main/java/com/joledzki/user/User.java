@@ -5,6 +5,9 @@ import com.joledzki.book.Book;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -19,6 +22,8 @@ import java.util.Set;
 @Getter @Setter @NoArgsConstructor
 public class User implements UserDetails {
 
+    private static String username_message = "Hello world";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,6 +31,9 @@ public class User implements UserDetails {
     @NotNull
     @Size(min=4, max=32, message = "Username must be between 4 and 32 characters")
     private String username;
+
+    @NotNull
+    @Size(min=6,max=99, message = "Password must be between 6 and 32 characters")
     private String password;
 
     @NotNull
