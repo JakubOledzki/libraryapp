@@ -31,10 +31,10 @@ public class BookController {
 
     @GetMapping("/create-book")
     public String bookForm(Model model){
-        User user = userService.getUserDetails();
+//        User user = userService.getUserDetails();
         Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
-        model.addAttribute("user",user);
-        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
+//        model.addAttribute("user",user);
+//        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
         model.addAttribute("book",new Book());
         return "createBook";
     }
@@ -42,21 +42,21 @@ public class BookController {
     @PostMapping("/addBook")
     public String addBook(Book book){
 
-        book.setCreatedByUser(userService.getUserDetails());
+//        book.setCreatedByUser(userService.getUserDetails());
         bookRepository.save(book);
         return "createBook";
     }
 
     @GetMapping("/list-books")
     public String getListBook(Model model){
-        User user = userService.getUserDetails();
+//        User user = userService.getUserDetails();
         Authorities adminAdd = authoritiesRepository.findByName("ADMIN_ADD");
         Authorities adminEdit = authoritiesRepository.findByName("ADMIN_EDIT");
         Authorities adminDelete = authoritiesRepository.findByName("ADMIN_DELETE");
-        model.addAttribute("user",user);
-        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), adminAdd).isPresent());
-        model.addAttribute("admin_edit",userRepository.findByIdAndAuthorities(user.getId(), adminEdit).isPresent());
-        model.addAttribute("admin_delete",userRepository.findByIdAndAuthorities(user.getId(), adminDelete).isPresent());
+//        model.addAttribute("user",user);
+//        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), adminAdd).isPresent());
+//        model.addAttribute("admin_edit",userRepository.findByIdAndAuthorities(user.getId(), adminEdit).isPresent());
+//        model.addAttribute("admin_delete",userRepository.findByIdAndAuthorities(user.getId(), adminDelete).isPresent());
         model.addAttribute("books", bookRepository.findAll());
         return "listBook";
     }
@@ -72,8 +72,8 @@ public class BookController {
                 return "redirect:/list-books";
             }
             else {
-                bookRepository.setUserRent(id, userService.getUserDetails());
-                System.out.println("USER: " + userService.getUserDetails().getUsername() + " RENTED BOOK");
+//                bookRepository.setUserRent(id, userService.getUserDetails());
+//                System.out.println("USER: " + userService.getUserDetails().getUsername() + " RENTED BOOK");
             }
         }
         else{
@@ -84,34 +84,34 @@ public class BookController {
 
     @GetMapping("/myBooks")
     public String getMyBooks(Model model){
-        User user = userService.getUserDetails();
+//        User user = userService.getUserDetails();
         Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
-        model.addAttribute("user",user);
-        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
-        model.addAttribute("books2",bookRepository.findAllByRentedByUser(userService.getUserDetails()));
-        model.addAttribute("books2",bookRepository.findAllByRentedByUser(userService.getUserDetails()));
+//        model.addAttribute("user",user);
+//        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
+//        model.addAttribute("books2",bookRepository.findAllByRentedByUser(userService.getUserDetails()));
+//        model.addAttribute("books2",bookRepository.findAllByRentedByUser(userService.getUserDetails()));
         return "myBooks";
     }
 
     @GetMapping("/giveBookBack")
     public String giveBookBack(@RequestParam Long id){
-        Optional<Book> book = bookRepository.findByIdAndRentedByUser(id, userService.getUserDetails());
-        if(book != null){
-            bookRepository.setUserRent(id,null);
-            System.out.println("USER GIVE THE BOOK BACK");
-        }
-        else {
-            System.out.println("ITS NOT YOUR BOOK");
-        }
+//        Optional<Book> book = bookRepository.findByIdAndRentedByUser(id, userService.getUserDetails());
+//        if(book != null){
+//            bookRepository.setUserRent(id,null);
+//            System.out.println("USER GIVE THE BOOK BACK");
+//        }
+//        else {
+//            System.out.println("ITS NOT YOUR BOOK");
+//        }
         return "redirect:/myBooks";
     }
 
     @GetMapping("/editBook")
     public String editBook(@RequestParam Long id, Model model){
-        User user = userService.getUserDetails();
+//        User user = userService.getUserDetails();
         Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
-        model.addAttribute("user",user);
-        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
+//        model.addAttribute("user",user);
+//        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
         Optional<Book> book = bookRepository.findById(id);
         if(book == null){
             System.out.println("Book doesn't exist");

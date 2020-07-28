@@ -24,19 +24,19 @@ public class ProfilController {
 
     @GetMapping("/")
     public String getProfil(Model model){
-        User user = userService.getUserDetails();
+//        User user = userService.getUserDetails();
         Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
-        model.addAttribute("user",user);
-        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
+//        model.addAttribute("user",user);
+//        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
         return "index";
     }
 
     @PostMapping("/index")
     public String getIndex(Model model){
-        User user = userService.getUserDetails();
+//        User user = userService.getUserDetails();
         Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
-        model.addAttribute("user",user);
-        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
+//        model.addAttribute("user",user);
+//        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
         return "index";
     }
 

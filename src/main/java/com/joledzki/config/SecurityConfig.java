@@ -12,18 +12,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    UserServiceImpl userService;
-    SecurityPassword securityPassword;
-
     @Autowired
-    public SecurityConfig(UserServiceImpl userService, SecurityPassword securityPassword){
-        this.userService = userService;
-        this.securityPassword = securityPassword;
-    }
+    private CustomAuthenticationProvider customAuthenticationProvider;
+    @Autowired
+    private SecurityPassword securityPassword;
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(securityPassword.encode());
+        auth.authenticationProvider(customAuthenticationProvider);
     }
 
     @Override
