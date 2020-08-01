@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/","/index","/myBooks").authenticated()
+        http.authorizeRequests().antMatchers("/","/index","/myBooks","/test").authenticated()
                                 .antMatchers("/list-books").hasAnyAuthority("USER_READ")
                                 .antMatchers("/rentBook","/giveBookBack").hasAnyAuthority("USER_RENT")
                                 .antMatchers("/addBook", "/create-book").hasAnyAuthority("ADMIN_ADD")
@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     .loginPage("/login")
-                    .successForwardUrl("/index")
+                    .successForwardUrl("/test")
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .permitAll()
