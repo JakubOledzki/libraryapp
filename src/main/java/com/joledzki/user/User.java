@@ -66,6 +66,12 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
+    public User(String username, String password, List<Authorities> authorities) {
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
+    }
+
     public Long getId() {
         return id;
     }

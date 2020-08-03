@@ -34,12 +34,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     .loginPage("/login")
-                    .successForwardUrl("/test")
+                    .successForwardUrl("/index")
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .permitAll()
                 .and()
                 .logout()
+                .and()
+                .httpBasic()
                 .and()
                 .csrf().disable();
     }

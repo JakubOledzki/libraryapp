@@ -19,9 +19,9 @@ public class UserServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
 
-//    public User getUserDetails(){
-//        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//    }
+    public User getUserDetails(){
+        return (User) SecurityContextHolder.getContext().getAuthentication().getDetails();
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

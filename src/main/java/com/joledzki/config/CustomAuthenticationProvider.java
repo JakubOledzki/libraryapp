@@ -8,7 +8,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -31,7 +34,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         if(user.isPresent() && securityPassword.encode().matches(password, user.get().getPassword())){
             System.out.println("Logged: "+username);
-            return new UsernamePasswordAuthenticationToken(user.get().getUsername(), user.get().getPassword(), user.get().getAuthorities());
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.get().getUsername(),user.get().getPassword(),user.get().getAuthorities());
+            token.setDetails(user.get());
+            return token;
         }
         else return null;
     }
