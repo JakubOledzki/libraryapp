@@ -10,9 +10,7 @@ import com.joledzki.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -29,7 +27,7 @@ public class BookController {
     private UserServiceImpl userService;
 
 
-    @GetMapping("/create-book")
+    @GetMapping("/book/create")
     public String bookForm(Model model){
         User user = userService.getUserDetails();
         Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
@@ -47,7 +45,8 @@ public class BookController {
         return "createBook";
     }
 
-    @GetMapping("/list-books")
+    //All of books
+    @GetMapping("/books")
     public String getListBook(Model model){
         User user = userService.getUserDetails();
         Authorities adminAdd = authoritiesRepository.findByName("ADMIN_ADD");
@@ -61,7 +60,18 @@ public class BookController {
         return "listBook";
     }
 
-    @GetMapping("/rentBook")
+    //List user's books
+    @GetMapping("/books/{id}")
+    public String getMyBooks(@PathVariable Long id, Model model){
+        User user = userService.getUserDetails();
+        Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
+        model.addAttribute("user",user);
+        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
+        model.addAttribute("books2",bookRepository.findAllByRentedByUser(userRepository.findById(id).get()));
+        return "myBooks";
+    }
+
+    @GetMapping("/book/rent")
     public String getRentBook(@RequestParam Long id){
 
         Optional<Book> book = bookRepository.findById(id);
@@ -69,7 +79,7 @@ public class BookController {
         if(book.isPresent()){
             if(book.get().getRentedByUser()!=null){
                 System.out.println("THIS BOOK IS ALREADY RENTED");
-                return "redirect:/list-books";
+                return "redirect:/books";
             }
             else {
                 bookRepository.setUserRent(id, userService.getUserDetails());
@@ -79,21 +89,10 @@ public class BookController {
         else{
             System.out.println("BOOK DOESN'T EXISTS");
         }
-        return "redirect:/list-books";
+        return "redirect:/books";
     }
 
-    @GetMapping("/myBooks")
-    public String getMyBooks(Model model){
-        User user = userService.getUserDetails();
-        Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
-        model.addAttribute("user",user);
-        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
-        model.addAttribute("books2",bookRepository.findAllByRentedByUser(userService.getUserDetails()));
-        model.addAttribute("books2",bookRepository.findAllByRentedByUser(userService.getUserDetails()));
-        return "myBooks";
-    }
-
-    @GetMapping("/giveBookBack")
+    @GetMapping("/book/back")
     public String giveBookBack(@RequestParam Long id){
         Optional<Book> book = bookRepository.findByIdAndRentedByUser(id, userService.getUserDetails());
         if(book != null){
@@ -106,14 +105,14 @@ public class BookController {
         return "redirect:/myBooks";
     }
 
-    @GetMapping("/editBook")
-    public String editBook(@RequestParam Long id, Model model){
+    @GetMapping("/book/edit/{id}")
+    public String editBook(@PathVariable Long id, Model model){
         User user = userService.getUserDetails();
         Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
         model.addAttribute("user",user);
         model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
         Optional<Book> book = bookRepository.findById(id);
-        if(book == null){
+        if(!book.isPresent()){
             System.out.println("Book doesn't exist");
         }
         else {
@@ -130,8 +129,8 @@ public class BookController {
         return "redirect:/list-books";
     }
 
-    @GetMapping("/deleteBook")
-    public String deleteBook(@RequestParam Long id){
+    @DeleteMapping("/book/{id}")
+    public String deleteBook(@PathVariable Long id){
         bookRepository.deleteBookById(id);
         System.out.println("DELETE BOOK ID: "+ id);
         return "redirect:/list-books";
