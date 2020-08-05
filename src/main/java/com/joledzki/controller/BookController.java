@@ -2,6 +2,7 @@ package com.joledzki.controller;
 
 import com.joledzki.authorities.Authorities;
 import com.joledzki.authorities.AuthoritiesRepository;
+import com.joledzki.authorities.AuthoritiesService;
 import com.joledzki.book.Book;
 import com.joledzki.book.BookRepository;
 import com.joledzki.user.User;
@@ -22,17 +23,18 @@ public class BookController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private AuthoritiesRepository authoritiesRepository;
-    @Autowired
     private UserServiceImpl userService;
+
+    @Autowired
+    private AuthoritiesService authoritiesService;
+
 
 
     @GetMapping("/book/create")
     public String bookForm(Model model){
         User user = userService.getUserDetails();
-        Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
         model.addAttribute("user",user);
-        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
+        model.addAttribute("authorities", authoritiesService.getAuthoritiesNameForUser(user.getAuthorities()));
         model.addAttribute("book",new Book());
         return "createBook";
     }
@@ -49,13 +51,8 @@ public class BookController {
     @GetMapping("/books")
     public String getListBook(Model model){
         User user = userService.getUserDetails();
-        Authorities adminAdd = authoritiesRepository.findByName("ADMIN_ADD");
-        Authorities adminEdit = authoritiesRepository.findByName("ADMIN_EDIT");
-        Authorities adminDelete = authoritiesRepository.findByName("ADMIN_DELETE");
         model.addAttribute("user",user);
-        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), adminAdd).isPresent());
-        model.addAttribute("admin_edit",userRepository.findByIdAndAuthorities(user.getId(), adminEdit).isPresent());
-        model.addAttribute("admin_delete",userRepository.findByIdAndAuthorities(user.getId(), adminDelete).isPresent());
+        model.addAttribute("authorities", authoritiesService.getAuthoritiesNameForUser(user.getAuthorities()));
         model.addAttribute("books", bookRepository.findAll());
         return "listBook";
     }
@@ -64,15 +61,14 @@ public class BookController {
     @GetMapping("/books/{id}")
     public String getMyBooks(@PathVariable Long id, Model model){
         User user = userService.getUserDetails();
-        Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
         model.addAttribute("user",user);
-        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
+        model.addAttribute("authorities", authoritiesService.getAuthoritiesNameForUser(user.getAuthorities()));
         model.addAttribute("books2",bookRepository.findAllByRentedByUser(userRepository.findById(id).get()));
         return "myBooks";
     }
 
-    @GetMapping("/book/rent")
-    public String getRentBook(@RequestParam Long id){
+    @GetMapping("/book/rent/{id}")
+    public String getRentBook(@PathVariable Long id){
 
         Optional<Book> book = bookRepository.findById(id);
 
@@ -92,8 +88,8 @@ public class BookController {
         return "redirect:/books";
     }
 
-    @GetMapping("/book/back")
-    public String giveBookBack(@RequestParam Long id){
+    @GetMapping("/book/back/{id}")
+    public String giveBookBack(@PathVariable Long id){
         Optional<Book> book = bookRepository.findByIdAndRentedByUser(id, userService.getUserDetails());
         if(book != null){
             bookRepository.setUserRent(id,null);
@@ -102,15 +98,14 @@ public class BookController {
         else {
             System.out.println("ITS NOT YOUR BOOK");
         }
-        return "redirect:/myBooks";
+        return "redirect:/books";
     }
 
     @GetMapping("/book/edit/{id}")
     public String editBook(@PathVariable Long id, Model model){
         User user = userService.getUserDetails();
-        Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
         model.addAttribute("user",user);
-        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
+        model.addAttribute("authorities", authoritiesService.getAuthoritiesNameForUser(user.getAuthorities()));
         Optional<Book> book = bookRepository.findById(id);
         if(!book.isPresent()){
             System.out.println("Book doesn't exist");
@@ -126,14 +121,14 @@ public class BookController {
     public String initEditBook(Book book){
         System.out.println(book.getId());
         bookRepository.updateBook(book.getId(),book.getAuthor(), book.getTitle(), book.getDescription());
-        return "redirect:/list-books";
+        return "redirect:/books";
     }
 
-    @DeleteMapping("/book/{id}")
+    @GetMapping("/book/delete/{id}")
     public String deleteBook(@PathVariable Long id){
         bookRepository.deleteBookById(id);
         System.out.println("DELETE BOOK ID: "+ id);
-        return "redirect:/list-books";
+        return "redirect:/books";
     }
 
 }

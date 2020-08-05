@@ -27,10 +27,10 @@
                 <td th:text="${book.getTitle()}"></td>
                 <td th:text="${book.getAuthor()}"></td>
                 <td>
-                        <span th:if="${book.getRentedByUser()}==null" style="color: green"><a th:href="@{/rentBook?id=}+${book.getId()}">RENT</a></span>
+                        <span th:if="${book.getRentedByUser()}==null" style="color: green"><a th:href="@{/book/rent/}+${book.getId()}">RENT</a></span>
                         <span th:unless="${book.getRentedByUser()}==null" style="color: red">RENTED</span>
-                        <span th:if="${admin_edit}==true"><a th:href="@{/book/edit/}+${book.getId()}"> , EDIT</a></span>
-                        <span th:if="${admin_delete}==true">, <a th:href="@{/deleteBook?id=}+${book.getId()}">DELETE</a></span>
+                        <span th:if="${authorities.contains('ADMIN_EDIT')}==true"><a th:href="@{/book/edit/}+${book.getId()}"> , EDIT</a></span>
+                        <span th:if="${authorities.contains('ADMIN_DELETE')}==true">, <a th:href="@{/book/delete/}+${book.getId()}">DELETE</a></span>
                 </td>
 <!--                <td th:unless="${book.getRentedByUser()}==null"><span style="color: red">RENTED</span>-->
 <!--                                                                <span th:if="${admin_edit}==true"><a th:href="@{/editBook?id=}+${book.getId()}"> , EDIT</a></span>-->

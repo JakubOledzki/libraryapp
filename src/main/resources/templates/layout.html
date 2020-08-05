@@ -19,11 +19,11 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/books/}+${user.getId()}">My Books</a>
                     </li>
-                    <li class="nav-item" th:if="${admin_add}==true">
-                        <a class="nav-link" th:href="@{/create-book}">Create book</a>
+                    <li class="nav-item" th:if="${authorities.contains('ADMIN_ADD')}==true">
+                        <a class="nav-link" th:href="@{/book/create}">Create book</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/list-books}">List books</a>
+                        <a class="nav-link" th:href="@{/books}">List books</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>

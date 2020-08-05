@@ -2,6 +2,7 @@ package com.joledzki.controller;
 
 import com.joledzki.authorities.Authorities;
 import com.joledzki.authorities.AuthoritiesRepository;
+import com.joledzki.authorities.AuthoritiesService;
 import com.joledzki.user.User;
 import com.joledzki.user.UserRepository;
 import com.joledzki.user.UserServiceImpl;
@@ -17,26 +18,24 @@ public class ProfilController {
 
     @Autowired
     private UserServiceImpl userService;
+
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private AuthoritiesRepository authoritiesRepository;
+    private AuthoritiesService authoritiesService;
 
     @GetMapping("/")
     public String getProfil(Model model){
         User user = userService.getUserDetails();
-        Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
+        System.out.println(userService.getUserDetails().getAuthorities());
         model.addAttribute("user",user);
-        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
+        model.addAttribute("authorities", authoritiesService.getAuthoritiesNameForUser(user.getAuthorities()));
         return "index";
     }
 
     @PostMapping("/index")
     public String getIndex(Model model){
         User user = userService.getUserDetails();
-        Authorities auth = authoritiesRepository.findByName("ADMIN_ADD");
         model.addAttribute("user",user);
-        model.addAttribute("admin_add",userRepository.findByIdAndAuthorities(user.getId(), auth).isPresent());
+        model.addAttribute("authorities", authoritiesService.getAuthoritiesNameForUser(user.getAuthorities()));
         return "index";
     }
 

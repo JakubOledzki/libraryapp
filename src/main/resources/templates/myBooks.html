@@ -26,7 +26,7 @@
             <th scope="row" th:text="${book.getId()}"></th>
             <td th:text="${book.getTitle()}"></td>
             <td th:text="${book.getAuthor()}"></td>
-            <td><span style="color: green"><a th:href="@{/giveBookBack?id=}+${book.getId()}">Give it back</a></span></td>
+            <td><span style="color: green"><a th:href="@{/book/back/}+${book.getId()}">Give it back</a></span></td>
         </tr>
         </tbody>
     </table>
