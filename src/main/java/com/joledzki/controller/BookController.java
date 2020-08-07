@@ -41,7 +41,7 @@ public class BookController {
     public String addBook(Book book){
 
         if(bookService.initBook(book, userService.getUserDetails())){
-            return "index";
+            return "redirect:/";
         } else{new Exception("CREATE BOOK ERROR");}
         return "createBook";
 

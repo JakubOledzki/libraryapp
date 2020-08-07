@@ -14,7 +14,7 @@
 
 <div class="container-fluid mt-5">
     <div class="col-6 mx-auto bg-light px-2 py-2" style="border: 1px solid #939393; border-radius: 5px">
-        <form action="/login" method="post">
+        <form method="post">
             <p class="text-danger text-center" th:if="${param.error}">Invalid username and password.</p>
             <p class="text-danger text-center" th:if="${param.logout}">You have been logged out.</p>
             <div class="form-group">

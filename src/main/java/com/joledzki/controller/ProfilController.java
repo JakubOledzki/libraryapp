@@ -25,7 +25,6 @@ public class ProfilController {
     @GetMapping("/")
     public String getProfil(Model model){
         User user = userService.getUserDetails();
-        System.out.println(userService.getUserDetails().getAuthorities());
         model.addAttribute("user",user);
         model.addAttribute("authorities", authoritiesService.getAuthoritiesNameForUser(user.getAuthorities()));
         return "index";
@@ -38,5 +37,6 @@ public class ProfilController {
         model.addAttribute("authorities", authoritiesService.getAuthoritiesNameForUser(user.getAuthorities()));
         return "index";
     }
+
 
 }
