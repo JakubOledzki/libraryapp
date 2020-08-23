@@ -15,7 +15,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Optional<Book> findById(Long id);
 
     List<Book> findAllByRentedByUser(User user);
-    Optional<Book> findByIdAndRentedByUser(Long id, User user);
+//    Optional<Book> findByIdAndRentedByUser(Long id, User user);
 
     @Transactional
     void deleteBookById(Long id);

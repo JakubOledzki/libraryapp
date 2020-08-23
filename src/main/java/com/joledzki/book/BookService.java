@@ -2,6 +2,7 @@ package com.joledzki.book;
 
 import com.joledzki.user.User;
 import com.joledzki.user.UserRepository;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@NoArgsConstructor
 public class BookService {
 
     @Autowired
@@ -17,6 +19,10 @@ public class BookService {
     @Autowired
     private UserRepository userRepository;
 
+
+    public BookService(BookRepository bookRepository){
+        this.bookRepository = bookRepository;
+    }
 
     public boolean initBook(Book book, User creator ){
 
